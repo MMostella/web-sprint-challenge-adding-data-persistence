@@ -1,9 +1,5 @@
 const db = require("../../data/dbConfig");
 
-// function getTasks() {
-//   return db("tasks");
-// }
-
 function getTasks() {
   return db("tasks as t")
     .leftJoin("projects as p", "t.project_id", "p.project_id")
