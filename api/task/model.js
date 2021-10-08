@@ -3,18 +3,16 @@ const db = require("../../data/dbConfig");
 function getTasks() {
   return db("tasks as t")
     .leftJoin("projects as p", "t.project_id", "p.project_id")
-    .select(
-      "t.task_description",
-      "t.task_notes",
-      "t.task_completed",
-      "p.project_name",
-      "p.project_description"
-    );
+    .select("p.project_name", "p.project_description", "t.*");
+}
+
+function getById(task_id) {
+  return db("tasks").where("task_id", task_id);
 }
 
 async function postTask(task) {
   const [task_id] = await db("tasks").insert(task);
-  return getTasks().where({ task_id }).first();
+  return getById(task_id);
 }
 
 module.exports = {

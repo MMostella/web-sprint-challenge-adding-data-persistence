@@ -4,9 +4,13 @@ function getProjects() {
   return db("projects");
 }
 
+function getById(project_id) {
+  return db("projects").where("project_id", project_id);
+}
+
 async function postProject(project) {
   const [project_id] = await db("projects").insert(project);
-  return getProjects().where({ project_id }).first();
+  return getById(project_id);
 }
 
 module.exports = {
